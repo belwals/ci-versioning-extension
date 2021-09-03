@@ -74,6 +74,10 @@ public class CiVersioningModelProcessor extends DefaultModelProcessor {
 
         String newDynamicVersion = generateBuildVersion(gitBranchStatus);
 
+        //In case of no git repo initialize then we ll ignore overriding the dynamic version
+        if(newDynamicVersion.length() == 0) {
+            return projectModel;
+        }
         Properties existingMavenProperties = projectModel.getProperties();
         existingMavenProperties.setProperty("revision", newDynamicVersion);
         return projectModel;
